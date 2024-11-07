@@ -21,27 +21,16 @@ model = load_auto_model()
 def predict_step(image):
   if image.mode != "RGB":
     image = image.convert(mode="RGB")
-
-#подготовка изображения для модели
 pixel_values = processor(images = image, return_tensors="pt").pixel_values
-
-#проверка доступа GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 pixel_values = pixel_values.to(device)
 model.to(device)
-
-#получение ответа
 with torch.no_grad():
   outputs = model(pixel_values)
-
-#получение индексов классов с максимальной вероятностью
 logits = outputs.logits
 predicted_class_idx = logits.argmax(-1).item()
-
-#получение имени класса (при наличии списков классов)
 labels = processor.config.id2label
 predicted_label = labels[predicted_class_idx]
-
 return predict_label
 
 #использование в стримлит
