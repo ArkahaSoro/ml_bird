@@ -5,11 +5,11 @@ import torch
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
 # Загрузка моделей
-@st.cache_resource(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def load_auto_image_processor():
     return AutoImageProcessor.from_pretrained('chrimaue/bird-species-classifier')
 
-@st.cache_resource(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def load_auto_model():
     return AutoModelForImageClassification.from_pretrained('chrimaue/bird-species-classifier')
 
@@ -53,4 +53,6 @@ if uploaded_file is not None:
     prediction = predict_step(image)
     if prediction is not None:
         st.write(f"Относится к виду: {prediction}")
+    
+ 
 
