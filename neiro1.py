@@ -31,7 +31,7 @@ logits = outputs.logits
 predicted_class_idx = logits.argmax(-1).item()
 labels = processor.config.id2label
 predicted_label = labels[predicted_class_idx]
-return predict_label
+return predicted_label
 
 #использование в стримлит
 st.title("Bird Species Classifier")
